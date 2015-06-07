@@ -48,7 +48,7 @@ pro eis_md_pipeline::md_missing_packet_check
   self.compressed_files_count = count
 end
 
-pro eis_md_pipeline::check_data, files
+pro eis_md_pipeline::check_data, files, damaged_files
   *self.local_logger->stage_title, 'Mission data check'
   self->md_ccsds_split_check, files
   self->md_missing_packet_check

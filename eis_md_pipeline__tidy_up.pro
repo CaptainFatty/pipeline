@@ -3,6 +3,7 @@ pro eis_md_pipeline::close_logs
 ;  close, lu, /force
 ;  free_lun, lu
   *self.local_logger->close_output
+  *self.main_logger->close_output
 end
 
 pro eis_md_pipeline::tidy_up

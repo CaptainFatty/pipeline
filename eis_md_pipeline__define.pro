@@ -95,8 +95,11 @@ end
 ;;  self->clear_temporary_log_directories
 ;end
 
-pro eis_md_pipeline::update_track_file, start_date, end_date
-
+pro eis_md_pipeline::update_pending_file
+  openw, lu, self.pending_file, /get_lun, /append
+  print, lu, self.sdate + ' ' + self.edate + ' ' + self.stime + ' ' + self.etime
+  close, lu
+  free_lun, lu
 end
 
 ; in __fetch_data.pro
@@ -400,11 +403,12 @@ pro eis_md_pipeline__define
              etime                            : '', $
 
              interactive                      : 0,  $
+             scheduled                        : 0,  $
 
              force_reformat                   : 0L, $
              fetch_only                       : 0L, $
              testing                          : '', $
-             special                          : '' , $
+             special                          : '', $
 
              decompressor                     : ptr_new(obj_new()), $
              reformatter                      : ptr_new(obj_new()), $
