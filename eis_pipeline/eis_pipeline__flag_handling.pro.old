@@ -1,0 +1,218 @@
+;+
+; NAME: eis_pipeline__flag_handling.pro
+;
+; PURPOSE: Super class for the EIS mission data and status data pipelines
+;
+; CATEGORY: Science
+;
+; CALLING SEQUENCE: None
+;
+; INPUTS: None
+;
+; KEYWORD PARAMETERS: None
+;
+; OUTPUTS: None
+;
+; CALLS: None
+;
+; COMMON BLOCKS:None.
+;
+; PROCEDURE:
+;
+; RESTRICTIONS: Uses SolarSoft
+;
+; MODIFICATION HISTORY:
+;	  23/11/05 mcrw	wrote
+;   14/08/06 mcrw	added documentation
+;
+;-
+
+function eis_pipeline::known, flag
+  return, 1
+end
+
+function eis_pipeline::flag_set, flag
+  return, self.flag eq flag
+end
+
+; pro eis_pipeline::log, msg, title=title
+;   *self.local_logger->log, msg, title=title
+; ;  lu = self.local_log_unit
+; ;  if not keyword_set(title) then msg1 = '	' + msg else msg1 = msg
+; ;  print, msg1
+; ;;  printf, lu, msg1
+; end
+;
+; pro eis_pipeline::main_log, msg, title=title
+;   print, 'Main Log: ' + msg                    ; for now
+;   *self.main_logger->log, msg, title=title
+; end
+;
+; pro eis_pipeline::write_to_logs, msg, title=title
+;   self->main_log, msg, title=title
+;   self->log, msg, title=title
+; end
+; ;
+;
+; ;; Instead of spawn could use the $
+; ;; form of the command.
+; pro eis_pipeline::shell, action
+;   self->log, action
+; ;  print, action
+; ;;;  spawn, action, result, /noshell
+; end
+; ;
+; pro eis_pipeline::stage_title, title
+;   self->log, ''
+;   date_time = systime()
+;   self->log, date_time + ' *** ' + title, /title
+; end
+;
+; pro eis_pipeline::trace, msg
+; ;  self->Log,
+;   *self.local_logger->trace, msg
+; end
+;
+; pro eis_pipeline::update_pending_file
+;   self->trace, 'eis_pipeline__define::update_pending_file'
+;   self->log, 'Updating pending file: ' + self.pending_file
+;   openw, lu, self.pending_file, /get_lun, /append, error=err
+;   if err ne 0 then begin
+;   	*self.local_logger->log, 'Can''t open pending_file'
+;   endif else begin
+;   	print, lu, self.sdate + ' ' + self.edate + ' ' + self.stime + ' ' + self.etime
+;   	close, lu
+;   	free_lun, lu
+;     self->log, 'Updated pending file'
+;   endelse
+; end
+;
+; function eis_pipeline::force_reformat
+;   self->trace, 'eis_pipeline__define::force_reformat'
+;   return, self.force_reformat eq 1
+; end
+
+pro eis_pipeline::set_flag, flag
+  self->trace, 'eis_pipeline__define::set_flag'
+  self->log, 'Setting flag to ' + '''' + flag + ''''
+end
+
+pro eis_pipeline::set_interactive, flag
+  self->trace, 'eis_pipeline__define::set_interactive'
+end
+
+; pro eis_pipeline::set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
+;   ;;;self->trace, 'eis_pipeline__define::set_date_time'
+;   self.sdate = sdate
+;   self.edate = edate
+;   self.stime = stime
+;   self.etime = etime
+; end
+;
+; function eis_pipeline::parse_date_time, sdate, edate, stime, etime
+;   ret = 1
+; ;  if keyword_set(sdate) then ret = ret and 1 else ret = ret and 0
+; ;  if keyword_set(edate) then ret = ret and 1 else ret = ret and 0
+; ;  if keyword_set(stime) then ret = ret and 1 else ret = ret and 0
+; ;  if keyword_set(etime) then ret = ret and 1 else ret = ret and 0
+;   self->trace, 'eis_pipeline__define::parse_date_time'
+;   print, 'Returning ', ret
+;   return, ret
+; end
+;
+; function eis_pipeline::local_log_filename
+;   return, *self.local_logger->file_name()
+; end
+;
+; ; pro eis_pipeline::initialise
+; ;
+; ; end
+;
+; pro eis_pipeline::debug
+;   print, 'eis_pipeline__define::debug'
+;   print, 'master_dir                  : ' + self.master_dir
+;   print, 'log_dir                     : ' + self.log_dir
+;   print, 'merge_dir                   : ' + self.merge_dir
+;   print, 'received_dir                : ' + self.received_dir
+; ;  print, 'join_dir                    : ' + self.join_dir
+; ;  print, 'decompressed_dir            : ' + self.decompressed_dir
+;   print, 'fits_dir                    : ' + self.fits_dir
+; ;  print, 'nursery_dir                 : ' + self.nursery_dir
+; ;  print, 'rescued_dir                 : ' + self.rescued_dir
+; ;  print, 'rescued_decompressed_dir    : ' + self.rescued_decompressed_dir
+; ;  print, 'rescued_fits_dir            : ' + self.rescued_fits_dir
+;   print, 'local_log                   : ' + self.local_log
+;   print, 'received_files_log          : ' + self.received_files_log
+; ;  print, 'md_split_check_log          : ' + self.md_split_check_log
+; ;  print, 'joined_files_log            : ' + self.joined_files_log
+; ;  print, 'ccsds_check_log             : ' + self.ccsds_check_log
+; ;  print, 'decompression_log           : ' + self.decompression_log
+; ;  print, 'decompression_master_record : ' + self.decompression_master_record
+; ;  print, 'reformat_log                : ' + self.reformat_log
+; ;  print, 'shutter_log                 : ' + self.shutter_log
+;   print, 'pending_file                : ' + self.pending_file
+;   print, 'sdtp                        : ' + self.sdtp
+; ;  print, 'join                        : ' + self.join
+;   print, ''
+;   print, 'sdate                       : ' + self.sdate
+;   print, 'edate                       : ' + self.edate
+;   print, 'stime                       : ' + self.stime
+;   print, 'etime                       : ' + self.etime
+;
+; end
+;
+; pro eis_pipeline__define
+;
+;   struct = { eis_pipeline,                       $
+;
+;              main_log                         : '', $
+;
+;              master_dir                       : '', $
+;              log_dir                          : '', $
+;              merge_dir                        : '', $
+;              received_dir                     : '', $
+;              fits_dir                         : '', $
+; ;             nursery_dir                      : '', $
+; ;             rescued_dir                      : '', $
+; ;             rescued_fits_dir                 : '', $
+;
+;              local_log                        : '', $
+;              received_files_log               : '', $
+;
+;              flag                              : '',  $
+;              known_flags                       : ['no_soda'], $
+;
+; ;             ccsds_check_log                  : '', $
+; ;             reformat_log                     : '', $
+;
+; 			 pending_file                     : '', $
+;
+;              sdtp                             : '', $
+; ;             join                             : '', $
+;
+;              received_files_count             : 0L, $
+;              fits_files_count                 : 0L, $
+; ;             rescued_fits_files_count         : 0L, $
+;
+;              sdate                            : '', $
+;              edate                            : '', $
+;              stime                            : '', $
+;              etime                            : '', $
+;
+;              interactive                      : 0,  $
+;              scheduled                        : 0,  $
+;
+;              force_reformat                   : 0L, $
+;              fetch_only                       : 0L, $
+;              testing                          : '', $
+;              special                          : '', $
+;
+;              reformatter                      : ptr_new(obj_new()), $
+;
+; ;             summary                          : DICTIONARY(), $
+;              main_logger                      : ptr_new(obj_new()), $
+;              local_logger                     : ptr_new(obj_new()), $
+;
+;             inherits eis_object }
+
+end

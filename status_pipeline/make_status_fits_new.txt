@@ -1,0 +1,83 @@
+
+foreach status type
+
+	foreach status file + timing file
+	
+		read in data
+
+		create missing data template
+
+		create primary fits header
+
+		add primary header keywords to primary header
+
+		make bintable extension
+
+			read data for each column in extension
+			do padding if required
+			create bintable extension header
+			add primary keywords
+			add column description keywords
+			write header?
+			create the bintable extension
+			write data columns
+
+add spacecraft bintable
+
+----------------------------------
+
+eis_make_status_fits_sts1, 'eis_sts_20120509_00001_sts1', timing+'sts1_20120509_000000.tim', output_dir='foo' 
+
+read in data file
+
+read in timing file
+	create missing data template if required
+	
+create primary fits header
+	create fits filename
+	
+add primary header keywords to primary header
+
+bintable = strarr(11)
+bintable[0]  = 'ICU PSU VOLTAGES'
+bintable[1]  = '/psu_currents'
+bintable[2]  = '/psu_temperatures'
+bintable[3]  = '/icu_misc'
+bintable[4]  = '/icu_status'
+bintable[5]  = '/psu_status'
+bintable[6]  = '/hm_status'
+bintable[7]  = '/icu_interfaces'
+bintable[8]  = '/icu_errors'
+bintable[9]  = '/icu_counters'
+bintable[10] = '/icu_science'
+
+eis_mkStsFits, file, sts1Data, fitsBase, parameterBase, 'sts1', parameterFilenames
+
+foreach bintable
+
+	make bintable extension
+
+	add primary header keywords
+	
+	foreach column in bintable
+
+		extract data for each column
+		
+		do padding if required
+	
+		create bintable extension header?
+		add primary keywords?
+		add column description keywords
+		write header?
+		create the bintable extension
+		write data columns
+
+add spacecraft bintable
+
+
+Structures:
+
+A = {bintable, name:'', units:'', num_cols:0, columns:strarr(30)}
+
+{'ICU PSU VOLTAGES'  'VOLTS'  5 'ICU_P2V5' 'ICU_P5V' 'ICU_P15V' 'ICU_N15V' 'MBUS_28v'}
+{'PSU CURRENTS'      'AMPS'   5 '' '' '' '' ''}
