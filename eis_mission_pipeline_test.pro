@@ -5,6 +5,6 @@
 ;run_pipeline, flag='fetch_only'
 
 ;;;run_pipeline, start_date='20150401', end_date='20150403', start_time='1030', end_time='1100', flag='no_soda', /interactive
-run_eis_md_pipeline, start_date='20150401', end_date='20150403', start_time='1030', end_time='1100', flag='no_soda'
+run_eis_mission_pipeline, start_date='20150401', end_date='20150403', start_time='1030', end_time='1100', flag='no_soda'
 
 ;run_pipeline, '20150401', '20150403', '1030', '1100', flag='no_soda', /interactive

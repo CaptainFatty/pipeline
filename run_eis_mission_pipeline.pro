@@ -21,7 +21,7 @@ end
 ; scheduled set for a new run, not ones from pending file.
 ; if kicked off by cron then perl program will supply date/time by
 ; parsing orl file(s)
-pro run_eis_md_pipeline, start_date=start_date, end_date=end_date, start_time=start_time, end_time=end_time, flag=flag, interactive=interactive, scheduled=scheduled
+pro run_eis_mission_pipeline, start_date=start_date, end_date=end_date, start_time=start_time, end_time=end_time, flag=flag, interactive=interactive, scheduled=scheduled
 ;  if n_params() lt 4 then begin
 ;;     self->exit
 ;     print, 'Parameter numbers not correct', n_params()
@@ -42,8 +42,8 @@ pro run_eis_md_pipeline, start_date=start_date, end_date=end_date, start_time=st
   res = *main_logger->open_log(getenv('HOME') + '/pipeline_log.txt', /append)
   print, 'Opened main log'
 
-  eis_pipeline = obj_new('eis_md_pipeline')
-  print, 'Got eis_md_pipeline'
+  eis_pipeline = obj_new('eis_mission_pipeline')
+  print, 'Got eis_mission_pipeline'
 
   eis_pipeline->initialise, main_logger, /trace
 
@@ -58,13 +58,13 @@ pro run_eis_md_pipeline, start_date=start_date, end_date=end_date, start_time=st
   if keyword_set(interactive) then begin ; read & check start/end times
 ;;;     *main_logger->log, 'EIS pipeline started interactively at ' + systime()
      msg = 'interactively on '
-     *main_logger->log, 'EIS md pipeline started ' + msg + systime(), /title
+     *main_logger->log, 'EIS mission pipeline started ' + msg + systime(), /title
      interactive_str = '/interactive'
 ;;;     if parse_date_time(sdate, edate, stime, etime) then begin
      if self->parse_date_time(sdate, edate, stime, etime) then begin
         eis_pipeline->set_interactive, true
         eis_pipeline->set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
-        *main_logger->log, 'run_eis_md_pipeline ' + interactive_str + ' ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
+        *main_logger->log, 'run_eis_mission_pipeline ' + interactive_str + ' ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
      endif else begin
         msg = 'Interactive date/time Error'
         goto, error
@@ -73,7 +73,7 @@ pro run_eis_md_pipeline, start_date=start_date, end_date=end_date, start_time=st
   endif else begin
 
      msg = 'by cron on '
-     *main_logger->log, 'EIS md pipeline started ' + msg + systime(), /title
+     *main_logger->log, 'EIS mission pipeline started ' + msg + systime(), /title
 
      ; perl file will supply date/time from orl...
 ;     ; create start/end date/times
@@ -91,7 +91,7 @@ pro run_eis_md_pipeline, start_date=start_date, end_date=end_date, start_time=st
            stime = '0945'
            etime = '1001'
            eis_pipeline->set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
-           *main_logger->log, 'run_eis_md_pipeline ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
+           *main_logger->log, 'run_eis_mission_pipeline ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
 ;        endelse
 ;     endelse
   endelse
