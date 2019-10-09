@@ -14,6 +14,9 @@ pro eis_status_pipeline__define
 ;	  timings_directory		   : '', $
 ;	  packet_source_directory  : '', $
 ;	  destination_directory    : '', $
+
+             timing_directory         : '', $
+             timing_files_directory   : '', $
              
              start_times              : make_array(16, /string), $ ;strarr(16), $
              end_times                : strarr(16),              $
