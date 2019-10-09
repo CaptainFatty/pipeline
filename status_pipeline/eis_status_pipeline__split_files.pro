@@ -53,6 +53,7 @@ pro eis_status_pipeline::split_files
           output_file = self.split_directory + '/' + filename + '_' + status_type
           ;help, output_file
           ok = *self.ccsds_writer->open_for_writing(output_file)
+          self->log, 'ccsds writer opened ' + output_file + ' ok'
 
           self->log, 'Splitting ' + file + ' into ' + status_type
 
