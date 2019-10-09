@@ -9,6 +9,8 @@ pro eis_status_pipeline::init_paths
 ;  self.received_dir             = root + 'received'
 ;  self.packet_source_directory  = root + 'received'
   self.split_directory          = root + 'split'
+  self.timing_directory         = root + 'timing'
+  self.timing_files_directory   = self.timing_directory + '/files'
 ;  self.join_dir                 = root + 'joined'
 ;  self.nursery_dir              = root + 'nursery'
 ;  self.decompressed_dir         = root + 'decompressed'
