@@ -118,9 +118,11 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=n
 
   if pipeline->flag_set('no-split') eq 0 then begin
      pipeline->stage_title, 'Split archives'
-;;;     pipeline->split_files
+     pipeline->split_files
   endif
 
+  pipeline->create_timing_files
+  
   ;pipeline->stage_title, 'Check data'
   ;pipeline->check_data, received_files, damaged_files
 
