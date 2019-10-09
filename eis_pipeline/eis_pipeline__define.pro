@@ -152,6 +152,6 @@ pro eis_pipeline__define
              main_logger              : ptr_new(obj_new()), $
              local_logger             : ptr_new(obj_new()), $
              
-             inherits eis_object }
+             inherits base_object }
   print,'eis_pipeline__define'
 end
