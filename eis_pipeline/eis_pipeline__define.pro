@@ -33,9 +33,9 @@ function eis_pipeline::force_reformat
   return, self.force_reformat eq 1
 end
 
-; pro eis_pipeline::initialise
-;
-; end
+;pro eis_pipeline::initialise, trace
+;  if keyword_set(trace) then self.trace = 1
+;end
 
 pro eis_pipeline::print_flags, title, flag_array
   foreach flag, flag_array do begin
@@ -82,8 +82,15 @@ pro eis_pipeline::debug
   print, 'special                     : ' + self.special
 end
 
-function eis_pipeline::init, main_logger
-  print, 'eis_pipeline::init'
+function eis_pipeline::init, main_logger, trace=trace, verbose=verbose
+  if keyword_set(verbose) then begin
+     self->set_verbose, verbose
+     self->trace, 'eis_pipeline::init'
+  endif
+  if keyword_set(trace) then begin
+     self->set_trace, trace
+;     self->trace, 'eis_pipeline::init'
+  endif
   self.main_logger = main_logger
 
 ;  self->init_paths
@@ -95,7 +102,7 @@ function eis_pipeline::init, main_logger
 end
 
 pro eis_pipeline__define
-  print,'eis_pipeline__define'
+;  print,'eis_pipeline__define'
   struct = { eis_pipeline,                 $
 
              bin                      : '', $
@@ -120,15 +127,17 @@ pro eis_pipeline__define
 ;             known_flags              : ['no-soda','fetch-only','no-fetch','no-split','fits-only','no-update','no-update-plots','no-update-trends','no-update-qcm','no-update-ss','testing','special'], $
              known_flags              : strarr(7), $
              set_flags                : strarr(7), $
-             no_soda                  : 0B, $
-             fetch_only               : 0B, $
-             no_fetch                 : 0B, $
-             fits_only                : 0B, $
-;             testing                  : 0B, $
-;             special                  : 0B, $
-             force_reformat           : 0, $
-             testing                  : '', $
-             special                  : '', $
+
+             ; Move this lot to eis_mission_pipeline
+;             no_soda                  : 0B, $
+;             fetch_only               : 0B, $
+;             no_fetch                 : 0B, $
+;             fits_only                : 0B, $
+;             force_reformat           : 0, $
+;;             testing                  : 0B, $
+;;             special                  : 0B, $
+;             testing                  : '', $
+;             special                  : '', $
              
 ;            ccsds_check_log      : '', $
 ;            reformat_log         : '', $
@@ -140,8 +149,9 @@ pro eis_pipeline__define
              
              sdate                    : '', $
              edate                    : '', $
-             stime                    : '', $
-             etime                    : '', $
+             ; Move next 2 to eis_mission_pipeline
+;             stime                    : '', $
+;             etime                    : '', $
              
              interactive              : 0,  $
              scheduled                : 0,  $
@@ -153,5 +163,5 @@ pro eis_pipeline__define
              local_logger             : ptr_new(obj_new()), $
              
              inherits base_object }
-  print,'eis_pipeline__define'
+
 end

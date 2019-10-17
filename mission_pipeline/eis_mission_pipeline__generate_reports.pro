@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_md_pipeline__generate_reports.pro
+; NAME: eis_mission_pipeline__generate_reports.pro
 ;
 ; PURPOSE: Generates the text reports of the processed data.
 ;
@@ -27,8 +27,8 @@
 ;
 ;-
 
-pro eis_md_pipeline::generate_reports
-  self->log, 'eis_md_pipeline__generate_reports::generate_reports'
+pro eis_mission_pipeline::generate_reports
+  self->log, 'eis_mission_pipeline__generate_reports::generate_reports'
   *self.local_logger->stage_title, 'Generate reports'
 
 end

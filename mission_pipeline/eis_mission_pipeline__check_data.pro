@@ -1,5 +1,42 @@
-pro eis_md_pipeline::md_ccsds_split_check, files
-  self->log, 'eis_md_pipeline::md_ccsds_split_check'
+;+
+; NAME:
+;       eis_mission_pipeline__check
+;
+; PURPOSE:
+;
+; CATEGORY:
+;       Hansteen/Wikstol Data analysis SW
+;
+; CALLING SEQUENCE:
+;         eis_aux = obj_new('eis_aux'). The init method is
+;         automatically run when the object is declared, and all the
+;         objects parameters are set there.
+;
+; INPUTS:
+;       None
+;
+; KEYWORD PARAMETERS:
+;
+; OUTPUTS:
+;
+; CALLS:
+;
+; COMMON BLOCKS:
+;
+; PROCEDURE:
+;       Defines the EIS_AUX object and fille the parameters (instance
+;       data) of the object in the init-method.
+;
+; RESTRICTIONS:
+;
+; MODIFICATION HISTORY:
+;       01-Aug-2018: mcrw - wrote
+;
+; $Id: eis_aux__define.pro 405 2010-07-04 11:21:38Z viggoh $
+;-
+
+pro eis_mission_pipeline::md_ccsds_split_check, files
+  self->log, 'eis_mission_pipeline::md_ccsds_split_check'
 ;  perform(*LOG, $state, "$HOME/bin/ccsds_merge_md_split_check $merge_dir > $merge_dir/md_split_check.txt") ;
   ;*self.local_logger->shell, '${HOME}/bin/ccsds_merge_split_check ' + self.merge_dir + ' > ' + self.merge_dir + '/' + self.md_split_check_log
   self->shell, '${HOME}/bin/ccsds_merge_split_check ' + self.merge_dir + ' > ' + self.merge_dir + '/' + self.md_split_check_log
@@ -28,7 +65,7 @@ pro eis_md_pipeline::md_ccsds_split_check, files
 ;  free_lun, lun
 end
 
-pro eis_md_pipeline::md_missing_packet_check
+pro eis_mission_pipeline::md_missing_packet_check
 ;  perform(*LOG, $state, "$HOME/bin/pipeline_md_hdr_dump $merge_dir > $merge_dir/md_hdr_check.txt");
 ; Do the mission data header dump, which also updates the
 ; engineering.txt file
@@ -50,7 +87,7 @@ pro eis_md_pipeline::md_missing_packet_check
   self.compressed_files_count = count
 end
 
-pro eis_md_pipeline::check_data, files, damaged_files
+pro eis_mission_pipeline::check_data, files, damaged_files
   *self.local_logger->stage_title, 'Mission data check'
   self->md_ccsds_split_check, files
   self->md_missing_packet_check

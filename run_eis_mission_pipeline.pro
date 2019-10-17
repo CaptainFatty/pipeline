@@ -42,15 +42,21 @@ pro run_eis_mission_pipeline, start_date=start_date, end_date=end_date, start_ti
   res = *main_logger->open_log(getenv('HOME') + '/pipeline_log.txt', /append)
   print, 'Opened main log'
 
-  eis_pipeline = obj_new('eis_mission_pipeline')
+  eis_pipeline = obj_new('eis_mission_pipeline', main_logger, /verbose, /trace)
   print, 'Got eis_mission_pipeline'
 
-  eis_pipeline->initialise, main_logger, /trace
+;  eis_pipeline->initialise, main_logger, /trace
+  eis_pipeline->initialise, /trace
 
-  flag_str = ''
-  eis_pipeline->set_flag, flag_str
+;  flag_str = ''
+;  eis_pipeline->set_flag, flag_str
   if keyword_set(flag) then begin
-     if eis_pipeline->known(flag) then eis_pipeline->set_flag, flag
+     print, 'FLAG: ' + flag + ' found...'
+                                ; Problem here - no_soda (for eg) not
+                                ;                known (ie not set in
+                                ;                the pipeline yet as a
+                                ;                known flag)
+    if eis_pipeline->known(flag) then eis_pipeline->set_flag, flag
      flag_str = 'flag=''' + flag + ''''
   end
 

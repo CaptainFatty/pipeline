@@ -31,8 +31,9 @@
 pro eis_pipeline::close_logs
   self->trace, 'eis_pipeline__tidy_up::close_logs'
   self->log, ''
-  self->log, 'eis status pipeline finished'
-  self->log, ''
+;  self->log, 'eis status pipeline finished'
+;  self->log, ''
+
 ;  lu = self.local_log_unit
 ;  close, lu, /force
 ;  free_lun, lu

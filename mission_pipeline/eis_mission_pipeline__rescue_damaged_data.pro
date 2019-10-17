@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_md_pipeline__rescue_damaged_data.pro
+; NAME: eis_mission_pipeline__rescue_damaged_data.pro
 ;
 ; PURPOSE: Calls the decompress and make fits procedures again this time
 ;          pointing to the rescued data.
@@ -28,8 +28,8 @@
 ;
 ;-
 
-pro eis_md_pipeline::rescue_damaged_data
-  self->log, 'eis_md_pipeline__rescue_damaged_data::rescue_damaged_data'
+pro eis_mission_pipeline::rescue_damaged_data
+  self->log, 'eis_mission_pipeline__rescue_damaged_data::rescue_damaged_data'
   self->decompress_data, /rescued
   self->reformat_data, /rescued
 end

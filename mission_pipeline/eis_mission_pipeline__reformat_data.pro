@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_md_pipeline__reformat_data.pro
+; NAME: eis_mission_pipeline__reformat_data.pro
 ;
 ; PURPOSE: Calls eis_mkfits to format the data into FITS files.
 ;
@@ -27,8 +27,8 @@
 ;
 ;-
 
-pro eis_md_pipeline::reformat_data, rescued=rescued
-  self->log, 'eis_md_pipeline__reformat_data::reformat_data'
+pro eis_mission_pipeline::reformat_data, rescued=rescued
+  self->log, 'eis_mission_pipeline__reformat_data::reformat_data'
   *self.local_logger->stage_title, 'Mission data reformat'
   if self.decompressed_files_count eq 0 then begin
 

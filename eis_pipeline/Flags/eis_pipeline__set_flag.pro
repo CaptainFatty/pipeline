@@ -28,7 +28,7 @@
 ;-
 
 pro eis_pipeline::set_flag, flag
-  self->trace, 'eis_pipeline_flag_handling::set_flag'
+  self->trace, 'eis_pipeline_flag_handling::set_flag,' + ' ' + flag
   index = self->known(flag)
   if index ne 0 then begin
      self->log, 'Setting flag to ' + '''' + flag + ''''

@@ -29,5 +29,7 @@
 
 pro eis_pipeline::trace, msg
 ;  self->Log,
-  *self.local_logger->trace, msg
+;;;  *self.local_logger->trace, msg
+;  print, msg
+  self->base_object::trace, msg
 end

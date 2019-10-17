@@ -22,12 +22,11 @@
 ; RESTRICTIONS: Uses SolarSoft
 ;
 ; MODIFICATION HISTORY:
-;	23/11/05 mcrw	wrote
-;   14/08/06 mcrw	added documentation
+;	01-Aug-2018	mcrw	wrote
 ;
 ;-
 
-pro eis_md_pipeline::debug
+pro eis_mission_pipeline::debug
   print, 'eis_md_pipeline__define::debug'
   print, 'join_dir                    : ' + self.join_dir
   print, 'decompressed_dir            : ' + self.decompressed_dir
@@ -47,9 +46,12 @@ pro eis_md_pipeline::debug
 
 end
 
-pro eis_md_pipeline__define
+pro eis_mission_pipeline__define
 
-  struct = { eis_md_pipeline,                       $
+  struct = { eis_mission_pipeline,                  $
+
+             stime                    : '', $
+             etime                    : '', $
 
              join_dir                         : '', $
              decompressed_dir                 : '', $
@@ -68,6 +70,16 @@ pro eis_md_pipeline__define
 
 ;	 pending_file                     : '', $
 
+             no_soda                  : 0B, $
+             fetch_only               : 0B, $
+             no_fetch                 : 0B, $
+             fits_only                : 0B, $
+             force_reformat           : 0, $
+;             testing                  : 0B, $
+;             special                  : 0B, $
+             testing                  : '', $
+             special                  : '', $
+
              join                             : '', $
 
              compressed_files_count           : 0L, $
@@ -76,7 +88,7 @@ pro eis_md_pipeline__define
              rescued_decompressed_files_count : 0L, $
              rescued_fits_files_count         : 0L, $
 
-             reformatter                      : ptr_new(obj_new()), $
+;             reformatter                      : ptr_new(obj_new()), $
              decompressor                     : ptr_new(obj_new()), $
              md_checker                       : ptr_new(obj_new()), $
 

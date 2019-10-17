@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_md_pipeline__move_reports_to_darts.pro
+; NAME: eis_mission_pipeline__move_reports_to_darts.pro
 ;
 ; PURPOSE: Moves the generated report files from their temporary location to
 ;          the correct location in DARTS according to their filename.
@@ -28,8 +28,8 @@
 ;
 ;-
 
-pro eis_md_pipeline::move_reports_to_darts
-  self->log, 'eis_md_pipeline__move_reports_to_darts::move_reports_to_darts'
+pro eis_mission_pipeline::move_reports_to_darts
+  self->log, 'eis_mission_pipeline__move_reports_to_darts::move_reports_to_darts'
   *self.local_logger->stage_title, 'Move reports to DARTS'
 
 end

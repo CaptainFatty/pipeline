@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_md_pipeline__update_soda.pro
+; NAME: eis_mission_pipeline__update_soda.pro
 ;
 ; PURPOSE: Moves the generated fits files from their temporary location to
 ;          the correct location in SODA according to their filename.
@@ -28,8 +28,8 @@
 ;
 ;-
 
-pro eis_md_pipeline::update_soda
-  self->log, 'eis_md_pipeline__update_soda::update_soda'
+pro eis_mission_pipeline::update_soda
+  self->log, 'eis_mission_pipeline__update_soda::update_soda'
   *self.local_logger->stage_title, 'Update soda'
 
 end

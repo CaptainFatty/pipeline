@@ -1,10 +1,10 @@
-pro eis_md_pipeline::perform_join, files, joined_files
-  self->trace, 'eis_md_pipeline__fetch_data::perform_join'
+pro eis_mission_pipeline::perform_join, files, joined_files
+  self->trace, 'eis_mission_pipeline__fetch_data::perform_join'
 end
 
-pro eis_md_pipeline::record_received_files, files
-  self->log, 'eis_md_pipeline__fetch_data::record_received_files'
-  print, 'eis_md_pipeline::record_received_files: ', files
+pro eis_mission_pipeline::record_received_files, files
+  self->log, 'eis_mission_pipeline__fetch_data::record_received_files'
+  print, 'eis_mission_pipeline::record_received_files: ', files
   openu, lun, self.received_files_log, /get_lun, error=err
   if err ne 0 then begin
     self->log, 'Can''t open received files log'
@@ -19,8 +19,8 @@ end
 ;$index = 0;
 
 ; OUT: files, count
-pro eis_md_pipeline::fetch_data, received_files
-  self->trace, 'eis_md_pipeline__fetch_data::fetch_data'
+pro eis_mission_pipeline::fetch_data, received_files
+  self->trace, 'eis_mission_pipeline__fetch_data::fetch_data'
   ;*self.local_logger->stage_title, 'Fetching data'
   self->stage_title, 'Fetching data'
 

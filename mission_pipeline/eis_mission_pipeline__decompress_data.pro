@@ -1,5 +1,5 @@
-pro eis_md_pipeline::md_decomp, count, files, rescued=rescued
-  self->log, 'eis_md_pipeline__decompress_data::md_decomp'
+pro eis_mission_pipeline::md_decomp, count, files, rescued=rescued
+  self->log, 'eis_mission_pipeline__decompress_data::md_decomp'
   *self.decompressor->initialise, self.decompress_log, verbose_level=verbose_level, rescued=rescued
 ;  openw, rat, '/Volumes/Data/Hinode/decompression/development_decomp_record.txt', /get_lun, /append
   openw, rat, self.decompression_master_record, /get_lun, /append
@@ -13,8 +13,8 @@ pro eis_md_pipeline::md_decomp, count, files, rescued=rescued
 end
 
 ; type = ok or rescued
-pro eis_md_pipeline::decompress_data, rescued=rescued
-  self->log, 'eis_md_pipeline__decompress_data::decompress_data'
+pro eis_mission_pipeline::decompress_data, rescued=rescued
+  self->log, 'eis_mission_pipeline__decompress_data::decompress_data'
   if keyword_set(rescued) then begin
      *self.local_logger->stage_title, 'Mission data decompress for rescued files'
      src_dir = self.rescued_dir

@@ -1,5 +1,5 @@
-pro eis_md_pipeline::remove_objects
-  self->trace, 'eis_md_pipeline__exit::remove_objects'
+pro eis_mission_pipeline::remove_objects
+  self->trace, 'eis_mission_pipeline__exit::remove_objects'
   ; This seems wrong! but works...
   if self.decompressor eq !NULL then begin
      *self.decompressor->exit
@@ -13,8 +13,8 @@ pro eis_md_pipeline::remove_objects
 ;skip_this:
 end
 
-pro eis_md_pipeline::exit, status, msg
-  self->trace, 'eis_md_pipeline__exit::exit'
+pro eis_mission_pipeline::exit, status, msg
+  self->trace, 'eis_mission_pipeline__exit::exit'
   self->remove_objects
   self->eis_pipeline::exit, status, msg
 ;  status_str = '(status ' + strtrim(string(status), 2) + '): '
