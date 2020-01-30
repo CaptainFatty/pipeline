@@ -31,10 +31,12 @@ pro eis_pipeline::set_flag, flag
   self->trace, 'eis_pipeline_flag_handling::set_flag,' + ' ' + flag
   index = self->known(flag)
   if index ne 0 then begin
-     self->log, 'Setting flag to ' + '''' + flag + ''''
+;     self->log, 'Setting flag to ' + '''' + flag + ''''
+     print, 'Setting flag to ' + '''' + flag + ''''
      self.set_flags[index - 1] = flag
   endif else begin
-     self->log, 'Unknown flag ''' + flag + ''' - not set'
+;     self->log, 'Unknown flag ''' + flag + ''' - not set'
+     print, 'Unknown flag ''' + flag + ''' - not set'
   endelse
 end
 

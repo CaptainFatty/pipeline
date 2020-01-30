@@ -47,10 +47,11 @@ end
 ;end
 
 pro eis_pipeline::open_local_log
+  print, 'eis_pipeline::open_local_log'
 ;  openw, lun, self.local_log, /get_lun, error=err
 ;  self.local_log_unit = lun
-  success = *self.local_logger->open_log('/Users/mcrw/tmp/local_log.txt') ; temp
-;  success = *self.local_logger->open_log(self.local_log)
+;  success = *self.local_logger->open_log('/Users/mcrw/tmp/local_log.txt') ; temp
+  success = *self.local_logger->open_log(self.local_log)
 end
 
 ;pro eis_pipeline::initialise, main_logger

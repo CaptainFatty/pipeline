@@ -21,9 +21,10 @@ pro eis_status_pipeline::reformat, trace=trace
     self.reformatter = ptr_new(obj_new(reformatter))
     *self.reformatter->initialise, self.local_logger, trace=trace ; give split_directory and fits_dir here too
     *self.reformatter->reformat
+    *self.reformatter->debug
     *self.reformatter->tidy_up
     self->log, 'Destroying reformatter: ' + reformatter
-    ;obj_destroy, *self.reformatter ; error
+    obj_destroy, *self.reformatter ; comment out if error
   endforeach
 
   ; or...

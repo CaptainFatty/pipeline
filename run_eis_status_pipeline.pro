@@ -17,12 +17,20 @@
 ; scheduled set for a new run, not ones from pending file.
 ; if kicked off by cron then perl program will supply date/time by
 ; parsing orl file(s) or reading a 'last processed' file
-pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=no_soda, no_fetch=no_fetch, fetch_only=fetch_only, no_split=no_split, flag=flag, interactive=interactive, scheduled=scheduled, trace=trace
+pro run_eis_status_pipeline, start_date=start_date, end_date=end_date,       $
+                             no_soda=no_soda,       no_fetch=no_fetch,       $
+                             fetch_only=fetch_only, no_split=no_split,       $
+                             flag=flag,             interactive=interactive, $
+                             scheduled=scheduled,   trace=trace
+
+  !quiet=1
+
 ;  if n_params() lt 4 then begin
 ;;     self->exit
 ;     print, 'Parameter numbers not correct', n_params()
 ;     return
 ;  endif
+
   ; These are for later reporting what the command line was
   interactive_string = ''
   scheduled_string = ''
@@ -32,51 +40,56 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=n
   stime = ''
   etime = ''
 
-  if keyword_set(start_date) then begin
-     sdate = start_date
-     print, 'Got start date: ' + start_date
-  endif
-
-  if keyword_set(end_date) then begin
-     edate = end_date
-     print, 'Got end date: ' + end_date
-  endif
+;  if keyword_set(start_date) then begin
+;     sdate = start_date
+;     print, 'run_eis_status_pipeline: Got start date ' + start_date
+;  endif
+;
+;  if keyword_set(end_date) then begin
+;     edate = end_date
+;     print, 'run_eis_status_pipeline: Got end date ' + end_date
+;  endif
 
   main_logger = ptr_new(obj_new('eis_logger'))
-  print, 'Got main logger'
+  print, 'run_eis_status_pipeline: Got main logger'
   res = *main_logger->open_log(getenv('HOME') + '/work/localdata/sdtp/merge/logs/pipeline_log.txt', /append)
-  print, 'Opened main log'
+  print, 'run_eis_status_pipeline: Opened main log (' + strtrim(string(res),2) + ')'
 
   pipeline = obj_new('eis_status_pipeline', main_logger)
-  print, 'Got eis_status_pipeline'
-
-;;;;  pipeline = obj_new('eis_status_pipeline', main_logger)
+  print, 'run_eis_status_pipeline: Got eis_status_pipeline'
 
 ; pipeline, eis_md_pipeline and eis_status_pipeline need own initialize
 ;  pipeline->initialise, main_logger, trace=trace
-  pipeline->set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
+;;;;  pipeline->set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
+  pipeline->set_date_time, sdate=start_date, edate=end_date, stime=stime, etime=etime
+  print, 'run_eis_status_pipeline: Initialising'
   pipeline->initialise, trace=trace
-  print, 'Initialised'
+  print, 'run_eis_status_pipeline: Initialised'
 
-  if keyword_set(no_soda) then begin
-     print, 'no_soda set, setting flag'
-     pipeline->set_flag, 'no-soda'
-  end
+  pipeline->handle_flag, no_soda=no_soda
+  pipeline->handle_flag, no_fetch=no_fetch
+  pipeline->handle_flag, fetch_only=fetch_only
+  pipeline->handle_flag, no_split=no_split
 
-  if keyword_set(no_fetch) then begin
-     print, 'no_fetch set, setting flag'
-     pipeline->set_flag, 'no-fetch'
-  end
-
-  if keyword_set(fetch_only) then begin
-     print, 'fetch_only set, setting flag'
-     pipeline->set_flag, 'fetch-only'
-  end
-
-  if keyword_set(no_split) then begin
-     print, 'no_split set, setting flag'
-     pipeline->set_flag, 'no-split'
-  end
+;  if keyword_set(no_soda) then begin
+;     print, 'no_soda set, setting flag'
+;     pipeline->set_flag, 'no-soda'
+;  end
+;
+;  if keyword_set(no_fetch) then begin
+;     print, 'no_fetch set, setting flag'
+;     pipeline->set_flag, 'no-fetch'
+;  end
+;
+;  if keyword_set(fetch_only) then begin
+;     print, 'fetch_only set, setting flag'
+;     pipeline->set_flag, 'fetch-only'
+;  end
+;
+;  if keyword_set(no_split) then begin
+;     print, 'run_eis_status_pipeline: no_split set, setting flag'
+;     pipeline->set_flag, 'no-split'
+;  end
 
   flag_str = ''
   if keyword_set(flag) then begin
@@ -93,22 +106,27 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=n
     pipeline->write_to_logs, 'run_eis_status_pipeline ' + interactive_str + ' ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
   endif else begin
     if keyword_set(scheduled) then msg = 'by scheduled cron on ' else msg = 'by cron on '
-    pipeline->write_to_logs, 'EIS status pipeline started ' + msg + systime(), /title
-    pipeline->write_to_logs, 'run_eis_status_pipeline ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
+;    pipeline->write_to_logs, 'EIS status pipeline started ' + msg + systime(), /title
+;    pipeline->write_to_logs, 'run_eis_status_pipeline ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
+    print, 'run_eis_status_pipeline: EIS status pipeline started ' + msg + systime()
+    print, 'run_eis_status_pipeline: ' + flag_str + ' ' + sdate + ' ' + edate + ' ' + stime  + ' ' + etime
   endelse
 
+  *main_logger->debug
+  pipeline->debug
+
+  print, 'run_eis_status_pipeline: Logging to main log at ' + pipeline->local_log_filename()
   pipeline->main_log, 'Logging to ' + pipeline->local_log_filename()
 
-  pipeline->debug
   ; ObjRef->classname::method
   ;pipeline->pipeline::debug
 
   if pipeline->flag_set('no-fetch') eq 0 then begin   
      pipeline->stage_title, 'Clear old data'
-;;;     pipeline->clear_old_data
+     pipeline->clear_old_data
 
      pipeline->stage_title, 'Fetch new data'
-;;;     pipeline->fetch_data, received_files
+     pipeline->fetch_data, received_files
   endif
   
   if pipeline->flag_set('fetch-only') ne 0 then begin
@@ -116,6 +134,7 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=n
      goto, the_exit
   endif
 
+  ; split_files and create_timing_files are the same???
   if pipeline->flag_set('no-split') eq 0 then begin
      pipeline->stage_title, 'Split archives'
      pipeline->split_files
@@ -141,6 +160,11 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date, no_soda=n
   pipeline->reformat, trace=trace
 
 ;  pipeline->rescue_damaged_data, damaged_files ; will call self->decompress_data, /rescued ...
+
+  if pipeline->flag_set('no-soda') then begin
+     pipeline->log, 'no-soda flag set, skipping updates'
+     goto, skip_soda_update
+  endif
 
   if pipeline->testing() then begin
       pipeline->main_log, 'testing flag set, skipping soda update'
@@ -213,11 +237,13 @@ the_exit:
 ;  pipeline->tidy_up
 
   pipeline->stage_title, 'Exit'
+  pipeline->debug
   pipeline->exit, 0, 'Ok'
 
 ;  obj_destroy, pipeline ; done in exit
 
 error:
+  pipeline->debug
   *main_logger->log, msg
   *main_logger->exit
   obj_destroy, main_logger

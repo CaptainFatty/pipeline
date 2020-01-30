@@ -1,6 +1,6 @@
 pro eis_status_pipeline::init_paths
-	print, 'eis_status_pipeline::init_paths'
-	self->eis_pipeline::init_paths
+  print, 'eis_status_pipeline::init_paths'
+  self->eis_pipeline::init_paths
 ;  root = getenv('HOME') + '/work/localdata/sdtp/merge/'
 	root = self->get_root()
 ;  root = self->eis_pipeline::get_root()
@@ -24,8 +24,8 @@ pro eis_status_pipeline::init_paths
 end
 
 pro eis_status_pipeline::init_logs
-	print, 'eis_status_pipeline::init_logs'
-	self->eis_pipeline::init_logs
+  print, 'eis_status_pipeline::init_logs'
+  self->eis_pipeline::init_logs
   sdate = self.sdate
   self.local_log   = self.log_dir + '/status_log_' + sdate + '.txt'
   self.received_files_log = self.log_dir + '/received_files_' + sdate + '.txt'
@@ -47,10 +47,11 @@ end
 ;end
 
 pro eis_status_pipeline::open_local_log
+  print, 'eis_status_pipeline::open_local_log'
 ;  openw, lun, self.local_log, /get_lun, error=err
 ;  self.local_log_unit = lun
 ;;;  success = *self.local_logger->open_log('/Users/mcrw/tmp/local_log.txt') ; temp
-  success = *self.local_logger->open_log('/Users/mcrw/work/localdata/sdtp/merge/logs/status/status_' + self.sdate + '_' + self.edate + '_log.txt',/append)
+  success = *self.local_logger->open_log('/Users/mcrw/work/localdata/sdtp/merge/status/logs/status_' + self.sdate + '_' + self.edate + '_log.txt',/append)
 ;  success = *self.local_logger->open_log(self.local_log)
 end
 
@@ -64,7 +65,7 @@ pro eis_status_pipeline::initialise, trace=trace
 ;  *self.main_logger->log, 'eis_md_pipeline::initialise'
 
   self.local_logger = ptr_new(obj_new('eis_logger'))
-  if keyword_set(trace) then *self.local_logger->set_trace, /trace
+  if keyword_set(trace) then *self.local_logger->set_trace, trace=trace
 
   self->init_paths
   self->init_logs
@@ -82,6 +83,7 @@ pro eis_status_pipeline::initialise, trace=trace
 
 ;  self.sdtp = '${HOME}/bin/sdtp'
   ;;;self.timing_split_script = self.bin + '/split_timings.sh'
-  self->set_flag, ''
+
+;;;;  self->set_flag, ''
 
 end

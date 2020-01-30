@@ -27,8 +27,28 @@
 ;
 ;-
 
-pro eis_pipeline::handle_flag, keyword=keyword
+pro eis_pipeline::handle_flag, no_soda=no_soda, no_fetch=no_fetch, fetch_only=fetch_only, no_split=no_split
   
+if keyword_set(no_soda) then begin
+     print, 'no_soda set, setting flag'
+     self->set_flag, 'no-soda'
+  end
+
+  if keyword_set(no_fetch) then begin
+     print, 'no_fetch set, setting flag'
+     self->set_flag, 'no-fetch'
+  end
+
+  if keyword_set(fetch_only) then begin
+     print, 'fetch_only set, setting flag'
+     self->set_flag, 'fetch-only'
+  end
+
+  if keyword_set(no_split) then begin
+     print, 'run_eis_status_pipeline: no_split set, setting flag'
+     self->set_flag, 'no-split'
+  end
+
 end
 
 ;function eis_pipeline::check_flag, flag_array, flag

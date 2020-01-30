@@ -19,4 +19,4 @@
 
 ;;run_eis_status_pipeline, start_date='20180525', end_date='20180526', /no_fetch, /no_split, /trace
 
-run_eis_status_pipeline, start_date='20180525', end_date='20180526', /no_split, /trace
+run_eis_status_pipeline, start_date='20180525', end_date='20180526', /trace, /no_fetch, /no_soda

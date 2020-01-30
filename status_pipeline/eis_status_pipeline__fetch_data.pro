@@ -1,3 +1,4 @@
+;;; What doe sthis do?
 pro eis_status_pipeline::perform_join, files, joined_files
   self->trace, 'eis_status_pipeline__fetch_data::perform_join'
 end
@@ -41,7 +42,7 @@ pro eis_status_pipeline::fetch_data, received_files
      msg = 'No status data files received'
      self->log, msg
      if not self.interactive then self->update_pending_file
-     self->exit, 99, msg
+;;;;;;;;;;;;;     self->exit, 99, msg
   endif
 
 end
