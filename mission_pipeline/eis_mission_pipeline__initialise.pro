@@ -42,7 +42,7 @@ end
 pro eis_mission_pipeline::open_local_log
 ;  openw, lun, self.local_log, /get_lun, error=err
 ;  self.local_log_unit = lun
-success = *self.local_logger->open_log('/Users/mcrw/tmp/local_log.txt',/append) ; temp
+  success = *self.local_logger->open_log('/Users/mcrw/tmp/local_log.txt',/append) ; temp
 ;  success = *self.local_logger->open_log(self.local_log)
 end
 
@@ -51,9 +51,9 @@ pro eis_mission_pipeline::initialise, trace=trace
 ;pro eis_mission_pipeline::initialise
   self->trace, 'eis_mission_pipeline::initialise'
 
-    print, 'Calling eis_pipeline::initialise'
+  print, 'Calling eis_pipeline::initialise'
 ;    self->eis_pipeline::initialise, main_logger
-    self->eis_pipeline::initialise
+  self->eis_pipeline::initialise
 
 ;  self.main_logger = main_logger
 ;  *self.main_logger->log, 'eis_mission_pipeline::initialise'
