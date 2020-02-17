@@ -103,7 +103,7 @@
 
 pro eis_pipeline__define
   print,'eis_pipeline::eis_pipeline__define'
-  struct = { eis_pipeline,                 $
+  struct = { eis_pipeline,                  $
 
              bin                      : '', $
              sdtp                     : '', $
@@ -116,7 +116,10 @@ pro eis_pipeline__define
              
              packet_source_directory  : '', $
              destination_directory    : '', $
+
+             ; move to eis_mission_pipeline
              split_directory          : '', $
+
              date_string	      : '', $
              
              main_log                 : '', $

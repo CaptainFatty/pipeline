@@ -21,9 +21,12 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date,       $
                              no_soda=no_soda,       no_fetch=no_fetch,       $
                              fetch_only=fetch_only, no_split=no_split,       $
                              flag=flag,             interactive=interactive, $
-                             scheduled=scheduled,   trace=trace
+                             scheduled=scheduled,   cron=cron,               $
+                             trace=trace,           verbose=verbose
 
   !quiet=1
+
+  main_log = '/work/localdata/sdtp/merge/logs/pipeline_log.txt'
 
 ;  if n_params() lt 4 then begin
 ;;     self->exit
@@ -50,21 +53,28 @@ pro run_eis_status_pipeline, start_date=start_date, end_date=end_date,       $
 ;     print, 'run_eis_status_pipeline: Got end date ' + end_date
 ;  endif
 
+  print, 'run_eis_status_pipeline: Getting main logger'
   main_logger = ptr_new(obj_new('eis_logger'))
   print, 'run_eis_status_pipeline: Got main logger'
-  res = *main_logger->open_log(getenv('HOME') + '/work/localdata/sdtp/merge/logs/pipeline_log.txt', /append)
+
+  print, 'run_eis_status_pipeline: Opening main log (' + main_log + ')'
+;;  res = *main_logger->open_log(getenv('HOME') + '/work/localdata/sdtp/merge/logs/pipeline_log.txt', /append)
+  res = *main_logger->open_log(getenv('HOME') + main_log, /append)
   print, 'run_eis_status_pipeline: Opened main log (' + strtrim(string(res),2) + ')'
 
-  pipeline = obj_new('eis_status_pipeline', main_logger)
+  print, 'run_eis_status_pipeline: Getting eis_status_pipeline'
+  pipeline = obj_new('eis_status_pipeline', main_logger, trace=trace, verbose=verbose)
   print, 'run_eis_status_pipeline: Got eis_status_pipeline'
 
 ; pipeline, eis_md_pipeline and eis_status_pipeline need own initialize
 ;  pipeline->initialise, main_logger, trace=trace
-;;;;  pipeline->set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
+
+  ; FIX: Too late! Open local log uses sdate in initialise...
   pipeline->set_date_time, sdate=start_date, edate=end_date, stime=stime, etime=etime
-  print, 'run_eis_status_pipeline: Initialising'
-  pipeline->initialise, trace=trace
-  print, 'run_eis_status_pipeline: Initialised'
+
+;;;  print, 'run_eis_status_pipeline: Initialising'
+;;;  pipeline->initialise, trace=trace
+;;;  print, 'run_eis_status_pipeline: Initialised'
 
   pipeline->handle_flag, no_soda=no_soda
   pipeline->handle_flag, no_fetch=no_fetch

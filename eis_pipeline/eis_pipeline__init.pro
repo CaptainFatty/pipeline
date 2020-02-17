@@ -28,6 +28,8 @@
 ;-
 
 function eis_pipeline::init, main_logger, trace=trace, verbose=verbose
+  self->trace, 'eis_pipeline::init'
+  print, 'eis_pipeline::init'
   if keyword_set(verbose) then begin
      self->set_verbose, verbose
      self->trace, 'eis_pipeline::init'
@@ -41,7 +43,10 @@ function eis_pipeline::init, main_logger, trace=trace, verbose=verbose
 ;  self->init_paths
 ;  self->init_logs
 
-;  self->initialize
+  self->set_verbose, 1
+  self->set_trace, 1
+
+  self->initialise
   
   return, 1
 end

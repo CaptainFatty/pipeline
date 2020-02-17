@@ -28,7 +28,8 @@
 ;-
 
 pro eis_pipeline::set_date_time, sdate=sdate, edate=edate, stime=stime, etime=etime
-  ;;;self->trace, 'eis_pipeline__define::set_date_time'
+  self->trace, 'eis_pipeline__define::set_date_time'
+  print, 'Setting sdate, edate to ' + sdate + ', ' + edate
   self.sdate = sdate
   self.edate = edate
   self.stime = stime

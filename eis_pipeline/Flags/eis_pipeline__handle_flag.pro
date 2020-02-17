@@ -28,8 +28,8 @@
 ;-
 
 pro eis_pipeline::handle_flag, no_soda=no_soda, no_fetch=no_fetch, fetch_only=fetch_only, no_split=no_split
-  
-if keyword_set(no_soda) then begin
+  self->trace, 'eis_pipeline::handle_flag'
+  if keyword_set(no_soda) then begin
      print, 'no_soda set, setting flag'
      self->set_flag, 'no-soda'
   end

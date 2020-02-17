@@ -39,6 +39,8 @@ pro eis_status_pipeline::split_files
   files = FILE_SEARCH(self.packet_source_directory + '/' + 'eis_sts*', count=file_count)
   if file_count eq 0 then begin
     self->log, 'No files found to split'
+    obj_destroy, *self.ccsds_writer
+    obj_destroy, *self.ccsds_reader
     return
   endif else begin
     foreach file, files do begin
@@ -75,6 +77,8 @@ pro eis_status_pipeline::split_files
         *self.ccsds_reader->close_files
       endelse
     endforeach
+    obj_destroy, *self.ccsds_writer
+    obj_destroy, *self.ccsds_reader
   endelse
 
 end

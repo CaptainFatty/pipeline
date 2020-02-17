@@ -30,8 +30,8 @@
 pro eis_pipeline::debug
   self->trace, 'eis_pipeline__define::debug'
 ;  print, 'eis_pipeline__define::debug'
-  self->log, 'bin                         : ' + self.bin
-;  print, 'bin                         : ' + self.bin
+;  self->log, 'bin                         : ' + self.bin
+  print, 'bin                         : ' + self.bin
   print, 'main_log                    : ' + self.main_log
   print, 'master_dir                  : ' + self.master_dir
   print, 'log_dir                     : ' + self.log_dir
