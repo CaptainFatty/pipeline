@@ -37,6 +37,6 @@ function eis_pipeline::check_flag, flag_array, flag
         break
      endif
   endforeach
-;;;  print, 'eis_pipeline::check_flag for ' + flag + ' returning ' + strtrim(string(ret),2)
-  return, ret
+  print, 'eis_pipeline::check_flag for ' + flag + ' returning ' + strtrim(string(ret),2)
+  return, ret ne 0
 end

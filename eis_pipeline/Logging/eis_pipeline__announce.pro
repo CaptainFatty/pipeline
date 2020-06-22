@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_pipeline__flag_set.pro
+; NAME: eis_pipeline__write_to_logs.pro
 ;
 ; PURPOSE: Super class for the EIS mission data and status data pipelines
 ;
@@ -27,11 +27,10 @@
 ;
 ;-
 
-;function eis_pipeline::flag_set, flag
-;  return, self.flag eq flag
-;end
-
-function eis_pipeline::flag_set, flag
-  self->trace, 'eis_pipeline_flag_handling::flag_set ' + flag
-  return, self->check_flag(self.set_flags, flag)
+; create main and local versions
+pro eis_pipeline::announce, msg, title=title
+  msg1 = 'Announce: ' + msg
+  self->main_log, msg1, title=title
+  self->log, msg1, title=title
+;  self->write_to_logs, msg
 end

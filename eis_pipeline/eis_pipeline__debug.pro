@@ -45,9 +45,10 @@ pro eis_pipeline::debug
   print, 'split_directory             : ' + self.split_directory
   print, 'date_string                 : ' + self.date_string
   print, 'flag                        : ' + self.flag
-;  print, 'known_flags                 : ' + self.known_flags ; !!!
+;  print, 'known_flags_expt            : ' + self.known_flags_expt ; !!!
 ;  print, 'set_flags                   : ' + self.set_flags ; !!!
 
+;  self->print_flags_expt, 'known_flags_expt            : '
   self->print_flags, 'known_flags                 : ',self.known_flags
   self->print_flags, 'set_flags                   : ',self.set_flags
   

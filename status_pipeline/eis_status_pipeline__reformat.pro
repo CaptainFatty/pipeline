@@ -20,6 +20,7 @@ pro eis_status_pipeline::reformat, trace=trace
     self->log, 'Starting reformatter: ' + reformatter
     self.reformatter = ptr_new(obj_new(reformatter))
     *self.reformatter->initialise, self.local_logger, trace=trace ; give split_directory and fits_dir here too
+    *self.reformatter->set_dates, self.sdate, self.edate
     *self.reformatter->reformat
     *self.reformatter->debug
     *self.reformatter->tidy_up

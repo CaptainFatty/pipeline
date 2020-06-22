@@ -10,6 +10,10 @@ pro eis_status_pipeline::open_local_log
   ; FIX: self.sdate and self.edate returning empty strings
   print, 'eis_status_pipeline::open_local_log: sdate = ' + self.sdate
   print, 'eis_status_pipeline::open_local_log: edate = ' + self.edate
+
+                                ; self.log is supposed to be set to
+                                ; '/Users/.../logs/status_log+' +
+                                ; sdate + '.txt ...
   success = *self.local_logger->open_log('/Users/mcrw/work/localdata/sdtp/merge/status/logs/status_' + self.sdate + '_' + self.edate + '_log.txt',/append)
 
 ;  success = *self.local_logger->open_log(self.local_log)

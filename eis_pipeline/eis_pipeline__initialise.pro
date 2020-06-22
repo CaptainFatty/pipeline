@@ -1,10 +1,9 @@
 
-;pro eis_pipeline::initialise, main_logger
 pro eis_pipeline::initialise
-;pro eis_md_pipeline::initialise
+
   self->trace, 'eis_pipeline::initialise'
-  print, 'eis_pipeline::initialise'
-;  self.main_logger = main_logger
+
+;  print, 'eis_pipeline::initialise'
 
   self->init_paths
   self->init_logs
@@ -16,6 +15,7 @@ pro eis_pipeline::initialise
   self.known_flags[4] = 'fits-only'
   self.known_flags[5] = 'testing'
   self.known_flags[6] = 'special'
+;  self.known_flags[7] = 'reformat-only'
   
 ;  root = getenv('HOME') + '/work/localdata/sdtp/merge/data/'
 

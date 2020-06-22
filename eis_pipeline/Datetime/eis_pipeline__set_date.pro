@@ -1,5 +1,5 @@
 ;+
-; NAME: eis_pipeline__flag_set.pro
+; NAME: eis_pipeline__set_date_time.pro
 ;
 ; PURPOSE: Super class for the EIS mission data and status data pipelines
 ;
@@ -27,11 +27,8 @@
 ;
 ;-
 
-;function eis_pipeline::flag_set, flag
-;  return, self.flag eq flag
-;end
-
-function eis_pipeline::flag_set, flag
-  self->trace, 'eis_pipeline_flag_handling::flag_set ' + flag
-  return, self->check_flag(self.set_flags, flag)
+pro eis_pipeline::set_date, sdate=sdate, edate=edate
+  self->trace, 'eis_pipeline__define::set_date'
+  self.sdate = sdate
+  self.edate = edate
 end

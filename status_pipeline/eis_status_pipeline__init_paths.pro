@@ -35,12 +35,9 @@ pro eis_status_pipeline::init_paths
 ;  root = getenv('HOME') + '/work/localdata/sdtp/merge/'
   root = self->get_root()
 ;  root = self->eis_pipeline::get_root()
-;  self.log_dir                  = root + 'logs'
-;  self.merge_dir                = root + 'merge'
-;  self.received_dir             = root + 'received'
-;  self.packet_source_directory  = root + 'received'
-  self.split_directory          = root + 'split'
-  self.timing_directory         = root + 'timing'
+
+  self.split_directory          = root + '/split'
+  self.timing_directory         = root + '/timing'
   self.timing_files_directory   = self.timing_directory + '/files'
 ;  self.join_dir                 = root + 'joined'
 ;  self.nursery_dir              = root + 'nursery'
@@ -49,7 +46,7 @@ pro eis_status_pipeline::init_paths
 ;  self.rescued_dir              = root + 'rescued'
 ;  self.rescued_decompressed_dir = self.rescued_dir + '/decompressed'
 ;  self.rescued_fits_dir         = self.rescued_dir + '/fits'
-  self.pending_file = root + 'pending.txt'
+  self.pending_file = root + '/pending.txt'
 ;  self.join         = self.bin + '/join.py' ;;; SHOULD BE IN MD PIPELINE...
 ;  self.master_dir = getenv('HOME') + '/work/localdata/sdtp/merge/logs/master_log'
 end

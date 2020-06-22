@@ -28,6 +28,14 @@
 ;
 ;-
 
+; '/'HK3'/ { print $11 }'
+
+; /Users/mcrw/work/localdata/sdtp/merge/timing/20200604_0000.log awk
+; '/STS1'/ { print $11 }'
+; /Users/mcrw/work/localdata/sdtp/merge/timing/files 20200604_0000.log
+
+; DEPRECATE
+; move to reformatter responsibility
 pro eis_status_pipeline::create_timing_files
   self->trace, 'eis_status_pipeline__split_files::create_timing_files'
 
@@ -38,7 +46,22 @@ pro eis_status_pipeline::create_timing_files
     self->log, 'No timing files found to split'
     return
   endif else begin
-     self->log, 'Pretending to split timing files...'
+;     self->log, 'Pretending to split timing files...'
+     self->log, 'Splitting timing files...'
+     foreach file, files do begin
+        foreach type, self.timing_file_types do begin
+           outfile = type + '_' + file_basename(file)
+           cmd = 'awk ''/' + type + '/' + ' { print $11 }''' + ' < ' + file + ' > ' + self.timing_files_directory + '/' + outfile
+;           cmd = 'awk ''/''' + type + '''/ { print $11 }'''
+;           print, cmd
+           self->log, cmd
+           spawn, cmd
+        end
+     end
+
+; sts1_timing.awk
+; /STS1/  { print $11 }
+
   endelse
 
 end

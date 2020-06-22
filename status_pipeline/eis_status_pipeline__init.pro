@@ -1,7 +1,8 @@
 
-function eis_status_pipeline::init, main_logger, trace=trace, verbose=verbose
+function eis_status_pipeline::init, main_logger, sdate, edate, trace=trace, verbose=verbose
   self->trace, 'eis_status_pipeline::init'
-  print, 'eis_status_pipeline::init'
+
+;  print, 'eis_status_pipeline::init'
   
   if keyword_set(verbose) then begin
      self->set_verbose, verbose
@@ -17,7 +18,7 @@ function eis_status_pipeline::init, main_logger, trace=trace, verbose=verbose
   self->set_verbose, 1
   self->set_trace, 1
 
-  self->initialise
+  self->initialise, sdate, edate
 
   return, 1
 

@@ -30,10 +30,12 @@
 function eis_pipeline::init, main_logger, trace=trace, verbose=verbose
   self->trace, 'eis_pipeline::init'
   print, 'eis_pipeline::init'
+
   if keyword_set(verbose) then begin
      self->set_verbose, verbose
      self->trace, 'eis_pipeline::init'
   endif
+
   if keyword_set(trace) then begin
      self->set_trace, trace
 ;     self->trace, 'eis_pipeline::init'

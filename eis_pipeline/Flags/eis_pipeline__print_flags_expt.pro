@@ -1,8 +1,7 @@
 ;+
-; NAME: eis_pipeline__get_root.pro
+; NAME: eis_pipeline__print_flags.pro
 ;
-; PURPOSE: Tidy up routines for the mission data pipeline.
-;          Closes log files and disposes of objects.
+; PURPOSE: 
 ;
 ; CATEGORY: Science
 ;
@@ -28,10 +27,9 @@
 ;
 ;-
 
-
-function eis_pipeline::get_root
-;  self->trace, 'eis_pipeline__get_root::get_root'
-
-  return, getenv('HOME') + '/work/localdata/sdtp/merge'
-	
+pro eis_pipeline::print_flags_expt, title
+  foreach flag, self.known_flags_expt do begin
+     if flag ne '' then title = title + flag + ' '
+  endforeach
+  print, title
 end
